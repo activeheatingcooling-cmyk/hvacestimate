@@ -288,60 +288,72 @@ header {
 
 /* ── MOBILE ── */
 @media(max-width:600px){
-  .app-wrapper { padding: 20px 14px 100px; }
-  header { padding: 12px 14px; gap: 8px; }
-  .logo { font-size: 0.95rem; }
-  .logo small { font-size: 0.55rem; }
-  .header-phone { padding: 8px 12px; font-size: 0.85rem; }
+  .app-wrapper { padding: 16px 12px 100px; }
+  header { padding: 10px 12px; }
+  .logo { font-size: 0.9rem; }
+  .logo small { font-size: 0.52rem; }
+  .header-phone { padding: 7px 11px; font-size: 0.8rem; }
   .mobile-call-bar { display: block; }
-  .progress-wrap { margin-bottom: 24px; }
-  .step-eyebrow { font-size: 0.68rem; margin-bottom: 8px; }
-  .step-title { font-size: clamp(1.6rem, 7vw, 2rem); margin-bottom: 8px; line-height: 1.1; }
-  .step-sub { font-size: 0.875rem; margin-bottom: 20px; }
+  .progress-wrap { margin-bottom: 20px; }
+  .step-eyebrow { font-size: 0.65rem; margin-bottom: 6px; }
+  .step-title { font-size: 1.5rem; margin-bottom: 6px; line-height: 1.15; }
+  .step-sub { font-size: 0.82rem; margin-bottom: 16px; line-height: 1.5; }
+
+  /* Cards — keep block layout (NOT flex) so onclick works, just smaller padding */
   .options-grid.cols-2,
-  .options-grid.cols-3 { grid-template-columns: 1fr; gap: 10px; }
-  .opt-card { padding: 14px 16px; border-radius: 10px; display: flex; align-items: center; gap: 14px; }
-  .opt-card .opt-icon { font-size: 1.6rem; margin-bottom: 0; flex-shrink: 0; }
-  .opt-card .opt-title { font-size: 0.95rem; margin-bottom: 2px; }
-  .opt-card .opt-desc { font-size: 0.78rem; }
-  .opt-badge { top: 8px; right: 8px; font-size: 0.58rem; padding: 2px 6px; }
-  .edu-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
-  .edu-card { padding: 14px 16px; }
-  .edu-card h4 { font-size: 0.875rem; }
-  .edu-card p { font-size: 0.78rem; }
+  .options-grid.cols-3 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opt-card { padding: 12px 10px; border-radius: 10px; }
+  .opt-card .opt-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  .opt-card .opt-title { font-size: 0.8rem; margin-bottom: 2px; line-height: 1.2; }
+  .opt-card .opt-desc { font-size: 0.68rem; line-height: 1.4; }
+  .opt-badge { top: 6px; right: 6px; font-size: 0.52rem; padding: 2px 5px; }
+
+  /* Full-width card override */
+  .opt-card[style*="grid-column"] { grid-column: span 2 !important; }
+
+  .edu-grid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 16px; }
+  .edu-card { padding: 12px 14px; }
+  .edu-card h4 { font-size: 0.82rem; }
+  .edu-card p { font-size: 0.75rem; }
+
   .form-grid.cols-2 { grid-template-columns: 1fr; }
-  .field-group label { font-size: 0.68rem; margin-bottom: 5px; }
+  .field-group label { font-size: 0.65rem; margin-bottom: 4px; }
   .field-group input,
   .field-group select,
-  .field-group textarea { padding: 14px; font-size: 1rem; border-radius: 8px; }
-  .estimate-hero { padding: 20px 16px; border-radius: 12px; }
-  .estimate-range { font-size: clamp(2rem, 8vw, 2.8rem); }
-  .estimate-note { font-size: 0.78rem; margin-bottom: 14px; }
-  .estimate-breakdown { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .est-item { padding: 10px 12px; }
-  .est-item .key { font-size: 0.68rem; }
-  .est-item .val { font-size: 0.82rem; }
-  .rebate-banner { padding: 12px 14px; font-size: 0.82rem; gap: 10px; }
-  .rebate-banner .icon { font-size: 1.2rem; }
-  .booking-section h3 { font-size: 0.95rem; }
-  .calendar-grid { gap: 4px; }
-  .cal-day { font-size: 0.78rem; border-radius: 6px; }
-  .cal-day-label { font-size: 0.62rem; }
-  .time-slots { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .time-slot { padding: 13px 8px; font-size: 0.82rem; border-radius: 8px; }
-  .nav-row { flex-direction: column-reverse; gap: 10px; margin-top: 20px; }
-  .btn-next { max-width: 100%; width: 100%; padding: 16px; font-size: 1rem; border-radius: 10px; }
-  .btn-back { width: 100%; padding: 13px; font-size: 0.875rem; border-radius: 10px; text-align: center; }
-  .trust-strip { gap: 12px; margin-top: 20px; padding-top: 16px; }
-  .trust-item { font-size: 0.75rem; }
-  .success-wrap { padding: 10px 0; }
-  .success-icon { width: 64px; height: 64px; font-size: 1.6rem; margin-bottom: 16px; }
-  .success-title { font-size: 1.8rem; }
-  .success-sub { font-size: 0.9rem; margin-bottom: 20px; }
-  .success-details { padding: 16px; margin-bottom: 20px; }
-  .success-row { font-size: 0.82rem; flex-wrap: wrap; gap: 4px; }
+  .field-group textarea { padding: 13px 12px; font-size: 16px; border-radius: 8px; }
+
+  .estimate-hero { padding: 16px 14px; border-radius: 10px; }
+  .estimate-range { font-size: 1.9rem; }
+  .estimate-note { font-size: 0.75rem; margin-bottom: 12px; }
+  .estimate-breakdown { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .est-item { padding: 8px 10px; }
+  .est-item .key { font-size: 0.65rem; }
+  .est-item .val { font-size: 0.78rem; }
+  .rebate-banner { padding: 10px 12px; font-size: 0.78rem; gap: 8px; }
+  .rebate-banner .icon { font-size: 1.1rem; }
+
+  .booking-section h3 { font-size: 0.9rem; }
+  .calendar-grid { gap: 3px; }
+  .cal-day { font-size: 0.72rem; border-radius: 5px; }
+  .cal-day-label { font-size: 0.58rem; padding-bottom: 4px; }
+  .time-slots { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .time-slot { padding: 12px 6px; font-size: 0.78rem; border-radius: 7px; }
+
+  .nav-row { flex-direction: column-reverse; gap: 8px; margin-top: 16px; }
+  .btn-next { max-width: 100%; width: 100%; padding: 15px; font-size: 0.95rem; border-radius: 8px; }
+  .btn-back { width: 100%; padding: 12px; font-size: 0.82rem; border-radius: 8px; text-align: center; }
+
+  .trust-strip { gap: 10px; margin-top: 16px; padding-top: 14px; flex-wrap: wrap; }
+  .trust-item { font-size: 0.7rem; }
+
+  .success-wrap { padding: 8px 0; }
+  .success-icon { width: 56px; height: 56px; font-size: 1.4rem; margin-bottom: 14px; }
+  .success-title { font-size: 1.6rem; }
+  .success-sub { font-size: 0.85rem; margin-bottom: 16px; }
+  .success-details { padding: 14px; margin-bottom: 16px; }
+  .success-row { font-size: 0.78rem; flex-wrap: wrap; gap: 3px; }
   .success-row .v { text-align: left; }
-  .call-cta { width: 100%; justify-content: center; padding: 16px; font-size: 1rem; border-radius: 10px; }
+  .call-cta { width: 100%; justify-content: center; padding: 15px; font-size: 0.95rem; border-radius: 8px; }
 }
 </style>
 </head>
