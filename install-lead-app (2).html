@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Your Free HVAC Install Estimate — Active Heating & Cooling</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0b1f3a;
+  --navy2: #112847;
+  --steel: #1e3a5f;
+  --blue: #1565c0;
+  --sky: #4fa3e0;
+  --ice: #e3f2fd;
+  --orange: #e8530a;
+  --orange2: #ff6b2b;
+  --orange-glow: rgba(232,83,10,0.18);
+  --white: #ffffff;
+  --off: #f4f7fb;
+  --muted: #7a94b0;
+  --border: rgba(255,255,255,0.09);
+  --card-bg: rgba(255,255,255,0.04);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--navy);
+  min-height: 100vh;
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* Background */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%, rgba(21,101,192,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 88% 85%, rgba(232,83,10,0.12) 0%, transparent 50%),
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.012) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.012) 60px);
+  pointer-events:none; z-index:0;
+}
+
+/* ── HEADER ── */
+header {
+  position: relative; z-index:10;
+  padding: 18px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: rgba(11,31,58,0.85);
+  backdrop-filter: blur(12px);
+}
+.logo { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.02em; }
+.logo span { color: var(--orange2); }
+.logo small { display:block; font-size:0.6rem; font-weight:500; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; }
+.header-phone { display:flex; align-items:center; gap:8px; color:var(--white); text-decoration:none; font-weight:700; font-size:1rem; background:var(--orange); padding:9px 18px; border-radius:6px; transition:background 0.2s; }
+.header-phone:hover { background:var(--orange2); }
+
+/* ── WRAPPER ── */
+.app-wrapper {
+  position:relative; z-index:1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap { margin-bottom: 36px; }
+.progress-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.progress-label { font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
+.progress-step { font-size:0.72rem; font-weight:700; color:var(--sky); }
+.progress-track { height:4px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden; }
+.progress-fill { height:100%; background: linear-gradient(90deg, var(--blue), var(--orange2)); border-radius:99px; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── STEP CARD ── */
+.step { display:none; animation: stepIn 0.35s cubic-bezier(0.4,0,0.2,1) both; }
+.step.active { display:block; }
+@keyframes stepIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+.step-eyebrow { font-size:0.7rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--orange2); margin-bottom:10px; }
+.step-title { font-family:'Crimson Pro', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight:600; line-height:1.15; margin-bottom:10px; }
+.step-title em { font-style:italic; color:var(--sky); }
+.step-sub { font-size:0.95rem; color:var(--muted); line-height:1.65; margin-bottom:32px; max-width:560px; }
+
+/* ── OPTION CARDS ── */
+.options-grid { display:grid; gap:12px; }
+.options-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.options-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+.opt-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.opt-card::before {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(79,163,224,0.06), transparent);
+  opacity:0; transition:opacity 0.2s;
+}
+.opt-card:hover { border-color: rgba(79,163,224,0.4); transform:translateY(-2px); }
+.opt-card:hover::before { opacity:1; }
+.opt-card.selected {
+  border-color: var(--orange2);
+  background: rgba(232,83,10,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(232,83,10,0.18);
+}
+.opt-card.selected::before { opacity:0; }
+
+.opt-icon { font-size:2rem; margin-bottom:10px; display:block; }
+.opt-title { font-size:1rem; font-weight:700; margin-bottom:4px; }
+.opt-desc { font-size:0.8rem; color:var(--muted); line-height:1.5; }
+.opt-badge { position:absolute; top:12px; right:12px; background:var(--orange); color:#fff; font-size:0.62rem; font-weight:800; padding:3px 8px; border-radius:3px; letter-spacing:0.08em; text-transform:uppercase; }
+
+/* ── EDUCATION CARDS ── */
+.edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px; }
+.edu-card { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:20px; }
+.edu-card h4 { font-size:0.9rem; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.edu-card p { font-size:0.8rem; color:var(--muted); line-height:1.6; }
+.edu-card .highlight { color:var(--orange2); font-weight:700; }
+
+/* ── FORM FIELDS ── */
+.form-grid { display:grid; gap:14px; }
+.form-grid.cols-2 { grid-template-columns:1fr 1fr; }
+.field-group label { display:block; font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+.field-group input, .field-group select, .field-group textarea {
+  width:100%; padding:13px 16px;
+  background:rgba(255,255,255,0.06);
+  border:1.5px solid var(--border);
+  border-radius:8px;
+  color:var(--white);
+  font-family:'Outfit',sans-serif; font-size:0.95rem;
+  outline:none; transition:border-color 0.18s, background 0.18s;
+}
+.field-group input:focus, .field-group select:focus, .field-group textarea:focus {
+  border-color:var(--sky);
+  background:rgba(79,163,224,0.07);
+}
+.field-group input::placeholder, .field-group textarea::placeholder { color:var(--muted); }
+.field-group select option { background:var(--steel); color:var(--white); }
+.field-group textarea { resize:vertical; min-height:90px; }
+
+/* ── ESTIMATE REVEAL ── */
+.estimate-hero {
+  background: linear-gradient(135deg, var(--steel), var(--navy2));
+  border: 1px solid rgba(79,163,224,0.25);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 20px;
+  position:relative; overflow:hidden;
+}
+.estimate-hero::before {
+  content:'';
+  position:absolute; top:-40px; right:-40px;
+  width:200px; height:200px;
+  background: radial-gradient(circle, rgba(232,83,10,0.15), transparent 70%);
+}
+.estimate-label { font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.estimate-range { font-family:'Crimson Pro',serif; font-size:clamp(2.4rem,5vw,3.4rem); font-weight:600; color:var(--white); line-height:1; margin-bottom:6px; }
+.estimate-range span { color:var(--orange2); }
+.estimate-note { font-size:0.82rem; color:var(--muted); margin-bottom:20px; }
+.estimate-breakdown { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.est-item { background:rgba(255,255,255,0.05); border-radius:8px; padding:12px 14px; }
+.est-item .key { font-size:0.72rem; color:var(--muted); margin-bottom:3px; }
+.est-item .val { font-size:0.9rem; font-weight:700; }
+
+.rebate-banner {
+  background: rgba(79,163,224,0.1);
+  border: 1px solid rgba(79,163,224,0.3);
+  border-radius:10px; padding:14px 18px;
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:20px; font-size:0.875rem;
+}
+.rebate-banner .icon { font-size:1.5rem; flex-shrink:0; }
+.rebate-banner strong { color:var(--sky); }
+
+/* ── BOOKING CALENDAR ── */
+.booking-section { margin-bottom:20px; }
+.booking-section h3 { font-size:1rem; font-weight:700; margin-bottom:14px; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:18px; }
+.cal-day-label { text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); padding-bottom:6px; }
+.cal-day {
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer;
+  border:1.5px solid transparent; transition:all 0.15s;
+}
+.cal-day.empty { pointer-events:none; }
+.cal-day.past { color:rgba(255,255,255,0.2); pointer-events:none; }
+.cal-day.available { background:var(--card-bg); border-color:var(--border); }
+.cal-day.available:hover { border-color:var(--sky); background:rgba(79,163,224,0.1); }
+.cal-day.selected { background:var(--orange); border-color:var(--orange); color:#fff; box-shadow:0 4px 16px rgba(232,83,10,0.35); }
+.cal-day.today { border-color:rgba(79,163,224,0.4); }
+
+.time-slots { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.time-slot {
+  padding:10px; text-align:center; border-radius:8px;
+  border:1.5px solid var(--border); background:var(--card-bg);
+  font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.15s;
+}
+.time-slot:hover { border-color:var(--sky); background:rgba(79,163,224,0.08); }
+.time-slot.selected { background:var(--orange); border-color:var(--orange); color:#fff; }
+.time-slot.full { color:var(--muted); pointer-events:none; text-decoration:line-through; }
+
+/* ── SUCCESS SCREEN ── */
+.success-wrap { text-align:center; padding:20px 0; }
+.success-icon {
+  width:80px; height:80px;
+  background: linear-gradient(135deg, var(--orange), var(--orange2));
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:2rem;
+  margin:0 auto 24px;
+  box-shadow:0 12px 40px rgba(232,83,10,0.4);
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+.success-title { font-family:'Crimson Pro',serif; font-size:2.4rem; font-weight:600; margin-bottom:10px; }
+.success-sub { color:var(--muted); font-size:1rem; max-width:460px; margin:0 auto 28px; line-height:1.65; }
+.success-details {
+  background:var(--card-bg); border:1px solid var(--border); border-radius:12px;
+  padding:24px; max-width:420px; margin:0 auto 28px; text-align:left;
+}
+.success-details h4 { font-size:0.78rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+.success-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.875rem; }
+.success-row:last-child { border:none; }
+.success-row .k { color:var(--muted); }
+.success-row .v { font-weight:600; text-align:right; }
+.call-cta { display:inline-flex; align-items:center; gap:10px; background:var(--orange); color:#fff; text-decoration:none; padding:16px 32px; border-radius:8px; font-weight:800; font-size:1.05rem; transition:background 0.2s; }
+.call-cta:hover { background:var(--orange2); }
+
+/* ── NAVIGATION BUTTONS ── */
+.nav-row { display:flex; align-items:center; justify-content:space-between; margin-top:28px; gap:12px; }
+.btn-back { background:none; border:1.5px solid var(--border); color:var(--muted); padding:13px 24px; border-radius:8px; font-family:'Outfit',sans-serif; font-size:0.9rem; font-weight:600; cursor:pointer; transition:all 0.15s; }
+.btn-back:hover { border-color:rgba(255,255,255,0.2); color:var(--white); }
+.btn-next {
+  background: linear-gradient(135deg, var(--orange), var(--orange2));
+  color:#fff; border:none; padding:14px 36px;
+  border-radius:8px; font-family:'Outfit',sans-serif;
+  font-size:1rem; font-weight:700; cursor:pointer;
+  transition:all 0.18s; flex:1; max-width:280px;
+  box-shadow:0 4px 20px rgba(232,83,10,0.3);
+  letter-spacing:0.02em;
+}
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(232,83,10,0.4); }
+.btn-next:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── TRUST STRIP ── */
+.trust-strip { display:flex; gap:20px; flex-wrap:wrap; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); }
+.trust-item { display:flex; align-items:center; gap:7px; font-size:0.78rem; color:var(--muted); }
+.trust-item .dot { width:6px; height:6px; background:var(--orange2); border-radius:50%; flex-shrink:0; }
+
+/* ── TOOLTIP ── */
+.info-tip { display:inline-block; width:16px; height:16px; background:rgba(79,163,224,0.2); border-radius:50%; text-align:center; line-height:16px; font-size:0.65rem; color:var(--sky); cursor:default; margin-left:4px; vertical-align:middle; }
+
+@media(max-width:600px){
+  .options-grid.cols-2, .options-grid.cols-3 { grid-template-columns:1fr; }
+  .edu-grid { grid-template-columns:1fr; }
+  .form-grid.cols-2 { grid-template-columns:1fr; }
+  .estimate-breakdown { grid-template-columns:1fr; }
+  .time-slots { grid-template-columns:repeat(2,1fr); }
+  header { padding:14px 16px; }
+  .app-wrapper { padding:24px 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    Active <span>Heating & Cooling</span>
+    <small>Auburn, WA · EPA Certified · Licensed & Insured</small>
+  </div>
+  <a href="tel:2069004662" class="header-phone">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.5 11.5 0 003.59.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.5 11.5 0 00.57 3.59 1 1 0 01-.25 1.01l-2.2 2.19z"/></svg>
+    (206) 900-4662
+  </a>
+</header>
+
+<div class="app-wrapper">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span class="progress-label" id="progressLabel">Getting started</span>
+      <span class="progress-step" id="progressStep">Step 1 of 6</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:16%"></div></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- STEP 1 — What type of install? -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="step active" id="step-1">
+    <div class="step-eyebrow">Free Install Estimate</div>
+    <h1 class="step-title">What system are you<br><em>looking to install?</em></h1>
+    <p class="step-sub">We'll ask a few quick questions to build your personalized estimate and find the best system for your home.</p>
+
+    <div class="options-grid cols-2">
+      <div class="opt-card" data-value="furnace" onclick="selectOpt(this,'installType')">
+        <span class="opt-icon">🔥</span>
+        <div class="opt-title">Furnace Replacement</div>
+        <div class="opt-desc">Gas or electric furnace — the most common heating system in Auburn homes.</div>
+      </div>
+      <div class="opt-card" data-value="ac" onclick="selectOpt(this,'installType')">
+        <span class="opt-icon">❄️</span>
+        <div class="opt-title">AC Installation</div>
+        <div class="opt-desc">Central air conditioning — keep cool through Washington summers.</div>
+      </div>
+      <div class="opt-card" data-value="heatpump" onclick="selectOpt(this,'installType')">
+        <div class="opt-badge">Most Popular</div>
+        <span class="opt-icon">🌀</span>
+        <div class="opt-title">Heat Pump</div>
+        <div class="opt-desc">Whole-home heating &amp; cooling in one unit. Eligible for major rebates &amp; tax credits.</div>
+      </div>
+      <div class="opt-card" data-value="minisplit" onclick="selectOpt(this,'installType')">
+        <span class="opt-icon">💨</span>
+        <div class="opt-title">Ductless Mini-Split</div>
+        <div class="opt-desc">Single or multi-zone comfort without ductwork. Perfect for additions, garages, or older homes.</div>
+      </div>
+      <div class="opt-card" data-value="full" onclick="selectOpt(this,'installType')" style="grid-column:span 2">
+        <span class="opt-icon">🏠</span>
+        <div class="opt-title">Full System Replacement</div>
+        <div class="opt-desc">Replace your entire HVAC setup — best value when your system is 15+ years old.</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <div></div>
+      <button class="btn-next" id="next-1" disabled onclick="goStep(2)">Continue →</button>
+    </div>
+    <div class="trust-strip">
+      <div class="trust-item"><div class="dot"></div>Free in-home estimates</div>
+      <div class="trust-item"><div class="dot"></div>EPA 608 Certified techs</div>
+      <div class="trust-item"><div class="dot"></div>All major brands stocked</div>
+      <div class="trust-item"><div class="dot"></div>Serving Auburn since 2009</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- STEP 2 — Home details -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="step" id="step-2">
+    <div class="step-eyebrow">About Your Home</div>
+    <h1 class="step-title">Tell us about<br><em>your home</em></h1>
+    <p class="step-sub">This helps us size the right system and give you an accurate estimate range.</p>
+
+    <div class="options-grid cols-3" style="margin-bottom:20px">
+      <div class="opt-card" data-value="small" onclick="selectOpt(this,'homeSize')">
+        <span class="opt-icon">🏡</span>
+        <div class="opt-title">Under 1,200 sq ft</div>
+        <div class="opt-desc">Condo, townhouse, or small home</div>
+      </div>
+      <div class="opt-card" data-value="medium" onclick="selectOpt(this,'homeSize')">
+        <span class="opt-icon">🏘️</span>
+        <div class="opt-title">1,200 – 2,400 sq ft</div>
+        <div class="opt-desc">Average single-family home</div>
+      </div>
+      <div class="opt-card" data-value="large" onclick="selectOpt(this,'homeSize')">
+        <span class="opt-icon">🏰</span>
+        <div class="opt-title">Over 2,400 sq ft</div>
+        <div class="opt-desc">Large home or commercial space</div>
+      </div>
+    </div>
+
+    <div class="options-grid cols-3">
+      <div class="opt-card" data-value="under10" onclick="selectOpt(this,'systemAge')">
+        <span class="opt-icon">✅</span>
+        <div class="opt-title">Under 10 years</div>
+        <div class="opt-desc">Newer system — likely repair first</div>
+      </div>
+      <div class="opt-card" data-value="10to15" onclick="selectOpt(this,'systemAge')">
+        <span class="opt-icon">⚠️</span>
+        <div class="opt-title">10 – 15 years</div>
+        <div class="opt-desc">Nearing end of lifespan</div>
+      </div>
+      <div class="opt-card" data-value="over15" onclick="selectOpt(this,'systemAge')">
+        <span class="opt-icon">🔴</span>
+        <div class="opt-title">15+ years (or unknown)</div>
+        <div class="opt-desc">Replacement likely the best value</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goStep(1)">← Back</button>
+      <button class="btn-next" id="next-2" disabled onclick="goStep(3)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- STEP 3 — Education -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="step" id="step-3">
+    <div class="step-eyebrow">What to Expect</div>
+    <h1 class="step-title">Here's what we<br><em>recommend for your home</em></h1>
+    <p class="step-sub" id="eduSub">Based on your answers, here's what you should know before we build your estimate.</p>
+
+    <div class="edu-grid" id="eduCards"></div>
+
+    <div class="options-grid" style="margin-bottom:8px">
+      <div class="opt-card" data-value="efficiency" onclick="selectOpt(this,'priority')">
+        <span class="opt-icon">⚡</span>
+        <div class="opt-title">Energy Efficiency — Lower Bills</div>
+        <div class="opt-desc">I want the most efficient system to reduce monthly energy costs long-term.</div>
+      </div>
+      <div class="opt-card" data-value="budget" onclick="selectOpt(this,'priority')">
+        <span class="opt-icon">💰</span>
+        <div class="opt-title">Best Value — Lowest Upfront Cost</div>
+        <div class="opt-desc">I want reliable quality at the most affordable install price.</div>
+      </div>
+      <div class="opt-card" data-value="premium" onclick="selectOpt(this,'priority')">
+        <span class="opt-icon">🏆</span>
+        <div class="opt-title">Premium Comfort — Best System</div>
+        <div class="opt-desc">I want the top-of-the-line system with the longest warranty.</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goStep(2)">← Back</button>
+      <button class="btn-next" id="next-3" disabled onclick="goStep(4)">See My Estimate →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- STEP 4 — Estimate reveal -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="step" id="step-4">
+    <div class="step-eyebrow">Your Personalized Estimate</div>
+    <h1 class="step-title">Here's your<br><em>install estimate range</em></h1>
+    <p class="step-sub">Based on your home size, system type, and preferences. Final price confirmed during your free in-home visit.</p>
+
+    <div class="estimate-hero">
+      <div class="estimate-label">Estimated Install Range</div>
+      <div class="estimate-range" id="estRange">$<span id="estLow">—</span> – $<span id="estHigh">—</span></div>
+      <div class="estimate-note" id="estNote">Includes equipment, labor, and standard installation</div>
+      <div class="estimate-breakdown" id="estBreakdown"></div>
+    </div>
+
+    <div class="rebate-banner" id="rebateBanner" style="display:none">
+      <span class="icon">💸</span>
+      <div>
+        <strong>You may qualify for up to <span id="rebateAmt">$2,000</span> in rebates & tax credits!</strong><br>
+        <span style="font-size:0.8rem;color:var(--muted)">PSE rebates, federal IRA tax credits, and manufacturer incentives may apply. We'll walk you through all available savings.</span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goStep(3)">← Back</button>
+      <button class="btn-next" onclick="goStep(5)">Book Free In-Home Estimate →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- STEP 5 — Contact info + booking -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="step" id="step-5">
+    <div class="step-eyebrow">Book Your Free Visit</div>
+    <h1 class="step-title">Lock in your<br><em>free estimate appointment</em></h1>
+    <p class="step-sub">One of our EPA certified technicians will come to your home, measure your space, and give you a firm quote — no obligation.</p>
+
+    <div class="form-grid cols-2" style="margin-bottom:14px">
+      <div class="field-group"><label>First Name *</label><input type="text" id="f-first" placeholder="Jane" oninput="checkStep5()"></div>
+      <div class="field-group"><label>Last Name *</label><input type="text" id="f-last" placeholder="Smith" oninput="checkStep5()"></div>
+    </div>
+    <div class="form-grid cols-2" style="margin-bottom:14px">
+      <div class="field-group"><label>Phone Number *</label><input type="tel" id="f-phone" placeholder="(253) 555-0100" oninput="fmtPhone(this);checkStep5()"></div>
+      <div class="field-group"><label>Email Address</label><input type="email" id="f-email" placeholder="jane@email.com"></div>
+    </div>
+    <div class="form-grid" style="margin-bottom:20px">
+      <div class="field-group"><label>Home Address *</label><input type="text" id="f-address" placeholder="1234 Main St, Auburn, WA 98001" oninput="checkStep5()"></div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="booking-section">
+      <h3>Pick a preferred date</h3>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+
+    <div class="booking-section" id="timeSection" style="display:none">
+      <h3>Pick a time window</h3>
+      <div class="time-slots" id="timeSlots">
+        <div class="time-slot" onclick="selectTime(this,'8am–10am')">8am – 10am</div>
+        <div class="time-slot" onclick="selectTime(this,'10am–12pm')">10am – 12pm</div>
+        <div class="time-slot" onclick="selectTime(this,'12pm–2pm')">12pm – 2pm</div>
+        <div class="time-slot" onclick="selectTime(this,'2pm–4pm')">2pm – 4pm</div>
+        <div class="time-slot full" title="Booked">4pm – 6pm ✗</div>
+        <div class="time-slot" onclick="selectTime(this,'Flexible')">I'm Flexible</div>
+      </div>
+    </div>
+
+    <div class="field-group" style="margin-top:16px">
+      <label>Anything else we should know? (optional)</label>
+      <textarea id="f-notes" placeholder="Current system brand, issues you're having, access notes..."></textarea>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="goStep(4)">← Back</button>
+      <button class="btn-next" id="next-5" onclick="submitLead()">Confirm Appointment →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- STEP 6 — Success -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="step" id="step-6">
+    <div class="success-wrap">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">You're all booked!</h2>
+      <p class="success-sub">We'll confirm your appointment within 60 minutes during business hours. Our technician will arrive on time and give you a no-pressure, detailed quote.</p>
+
+      <div class="success-details">
+        <h4>Your Appointment Summary</h4>
+        <div class="success-row"><span class="k">Name</span><span class="v" id="sum-name">—</span></div>
+        <div class="success-row"><span class="k">Service</span><span class="v" id="sum-service">—</span></div>
+        <div class="success-row"><span class="k">Estimate Range</span><span class="v" id="sum-range">—</span></div>
+        <div class="success-row"><span class="k">Preferred Date</span><span class="v" id="sum-date">—</span></div>
+        <div class="success-row"><span class="k">Time Window</span><span class="v" id="sum-time">—</span></div>
+        <div class="success-row"><span class="k">Address</span><span class="v" id="sum-address">—</span></div>
+        <div class="success-row"><span class="k">Phone</span><span class="v" id="sum-phone">—</span></div>
+      </div>
+
+      <a href="tel:2069004662" class="call-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.5 11.5 0 003.59.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.5 11.5 0 00.57 3.59 1 1 0 01-.25 1.01l-2.2 2.19z"/></svg>
+        Questions? Call (206) 900-4662
+      </a>
+
+      <div class="trust-strip" style="justify-content:center; margin-top:32px;">
+        <div class="trust-item"><div class="dot"></div>Free, no-obligation visit</div>
+        <div class="trust-item"><div class="dot"></div>Firm quote — no hidden fees</div>
+        <div class="trust-item"><div class="dot"></div>EPA certified technicians</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app-wrapper -->
+
+<script>
+// ── STATE ──
+const state = {
+  installType: null, homeSize: null, systemAge: null,
+  priority: null, selectedDate: null, selectedTime: null
+};
+
+const stepLabels = [
+  'System type', 'Home details', 'Recommendations',
+  'Your estimate', 'Book appointment', 'Confirmed!'
+];
+
+// ── NAVIGATION ──
+let currentStep = 1;
+const TOTAL = 6;
+
+function goStep(n) {
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step-' + n).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateProgress();
+  if (n === 3) buildEduCards();
+  if (n === 4) buildEstimate();
+  if (n === 5) buildCalendar();
+}
+
+function updateProgress() {
+  const pct = Math.round((currentStep / TOTAL) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = stepLabels[currentStep - 1];
+  document.getElementById('progressStep').textContent = `Step ${currentStep} of ${TOTAL}`;
+}
+
+// ── OPTION SELECTION ──
+function selectOpt(el, key) {
+  const parent = el.closest('.options-grid');
+  parent.querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state[key] = el.dataset.value;
+  checkNextButtons();
+}
+
+function checkNextButtons() {
+  const checks = {
+    1: () => state.installType,
+    2: () => state.homeSize && state.systemAge,
+    3: () => state.priority,
+  };
+  for (let i = 1; i <= 3; i++) {
+    const btn = document.getElementById('next-' + i);
+    if (btn && checks[i]) btn.disabled = !checks[i]();
+  }
+}
+
+// ── STEP 3: EDUCATION ──
+function buildEduCards() {
+  const typeInfo = {
+    furnace: {
+      title: 'Gas Furnace Replacement',
+      cards: [
+        { icon:'🌡️', title:'Efficient & Reliable', body:'Modern high-efficiency gas furnaces (95–98% AFUE) can cut your heating bill by up to 30% vs older models.', highlight:'Up to 30% savings' },
+        { icon:'⏱️', title:'15–20 Year Lifespan', body:'A quality furnace installed today should last 15–20 years with annual tune-ups.', highlight:'Long-term investment' },
+        { icon:'🔧', title:'Install Time: 4–6 Hours', body:'Most furnace replacements are completed in a single day. You\'ll have heat back the same afternoon.', highlight:'Same-day heat restored' },
+        { icon:'🏷️', title:'Brands We Install', body:'Goodman, American Standard, Daikin, and Bosch — we stock multiple tiers to fit every budget.', highlight:'Multiple options' }
+      ]
+    },
+    ac: {
+      title: 'Central AC Installation',
+      cards: [
+        { icon:'❄️', title:'Beat Washington Summers', body:'Auburn sees 10–20 days above 85°F each year, and it\'s getting warmer. A properly sized AC keeps your home comfortable.', highlight:'Sized for your home' },
+        { icon:'⚡', title:'High SEER Ratings', body:'Modern AC units run at 16–22 SEER — significantly more efficient than systems from 10 years ago.', highlight:'Lower energy bills' },
+        { icon:'🔧', title:'Install Time: 1 Day', body:'New AC installation (with existing ductwork) is typically a full-day project completed in one visit.', highlight:'One-day install' },
+        { icon:'💨', title:'Pair With Your Furnace', body:'Installing AC at the same time as a furnace often saves 15–20% on labor vs two separate projects.', highlight:'Bundle & save' }
+      ]
+    },
+    heatpump: {
+      title: 'Whole-Home Heat Pump',
+      cards: [
+        { icon:'🌀', title:'Heat & Cool in One Unit', body:'A whole-home heat pump replaces both your furnace AND air conditioner — one system, one install, one maintenance plan.', highlight:'2-in-1 system' },
+        { icon:'💸', title:'Major Rebates Available', body:'Qualifying heat pumps are eligible for federal IRA tax credits up to $2,000 plus PSE rebates up to $1,200.', highlight:'Up to $3,200 in savings' },
+        { icon:'🌿', title:'3× More Efficient', body:'Heat pumps move heat instead of generating it — they deliver 3 units of heat energy for every 1 unit of electricity used.', highlight:'300% efficiency' },
+        { icon:'🏠', title:'Whole-Home Coverage', body:'Connects to your existing ductwork to heat and cool every room in your home — no separate zones needed.', highlight:'Full home comfort' }
+      ]
+    },
+    minisplit: {
+      title: 'Ductless Mini-Split',
+      cards: [
+        { icon:'💨', title:'No Ductwork Needed', body:'Mini-splits mount directly on the wall and connect to an outdoor unit — ideal for homes without existing ducts, garages, or room additions.', highlight:'No duct installation cost' },
+        { icon:'🎛️', title:'Zone-by-Zone Control', body:'Each indoor unit has its own thermostat. Heat the bedroom without heating the whole house — saves energy and eliminates hot/cold spots.', highlight:'Per-room temperature control' },
+        { icon:'💸', title:'Rebates Apply Here Too', body:'Qualifying ductless mini-splits are eligible for PSE rebates and federal IRA tax credits, just like whole-home heat pumps.', highlight:'Up to $2,000+ in savings' },
+        { icon:'🔇', title:'Whisper-Quiet Operation', body:'Mitsubishi and Daikin mini-splits run at 19–22 dB — quieter than a whisper. Perfect for bedrooms and living areas.', highlight:'Ultra-quiet' }
+      ]
+    },
+    full: {
+      title: 'Full System Replacement',
+      cards: [
+        { icon:'🏠', title:'Best Long-Term Value', body:'Replacing everything at once — furnace, AC or heat pump, and coil — saves on labor and ensures perfectly matched components.', highlight:'Save 15–25% on labor' },
+        { icon:'✅', title:'Single Warranty', body:'A full system replacement from one manufacturer gives you a unified 10-year parts warranty vs multiple warranties to track.', highlight:'Unified 10-yr warranty' },
+        { icon:'⚡', title:'Maximum Efficiency', body:'Mismatched components reduce efficiency by 15–20%. A matched system runs at its rated SEER/AFUE all the time.', highlight:'No efficiency loss' },
+        { icon:'📅', title:'Done Right, Once', body:'One project, one crew, one inspection. Most full system replacements are completed in 6–8 hours.', highlight:'6–8 hour install' }
+      ]
+    }
+  };
+  const info = typeInfo[state.installType] || typeInfo.furnace;
+  document.getElementById('eduSub').textContent = `Here's what Auburn homeowners should know about ${info.title}.`;
+  document.getElementById('eduCards').innerHTML = info.cards.map(c => `
+    <div class="edu-card">
+      <h4>${c.icon} ${c.title}</h4>
+      <p>${c.body}<br><span class="highlight">${c.highlight}</span></p>
+    </div>
+  `).join('');
+}
+
+// ── STEP 4: ESTIMATE ──
+function buildEstimate() {
+  // Base ranges [low, high] by type
+  const base = { furnace:[3800,6700], ac:[5000,8000], heatpump:[5000,8000], minisplit:[3000,5500], full:[10000,15000] };
+  const sizeAdj = { small:[0,0], medium:[300,600], large:[700,1200] };
+  const priorAdj = { budget:[0,-300], efficiency:[300,600], premium:[300,600] };
+
+  const [bL, bH] = base[state.installType] || base.furnace;
+  const [sL, sH] = state.installType === 'minisplit' ? [0,0] : (sizeAdj[state.homeSize] || [0,0]);
+  const [pL, pH] = priorAdj[state.priority] || [0,0];
+
+  let low  = bL + sL + pL;
+  let high = bH + sH + pH;
+  low  = Math.round(low / 100) * 100;
+  high = Math.round(high / 100) * 100;
+
+  document.getElementById('estLow').textContent  = low.toLocaleString();
+  document.getElementById('estHigh').textContent = high.toLocaleString();
+
+  const notes = { furnace:'Gas furnace + installation + permit', ac:'AC unit, line set, electrical + labor', heatpump:'Whole-home heat pump + installation + permit', minisplit:'Single-zone ductless mini-split + installation', full:'Complete system: furnace/HP + AC + coil + labor' };
+  document.getElementById('estNote').textContent = notes[state.installType];
+
+  const sizeLabel = { small:'Under 1,200 sq ft', medium:'1,200–2,400 sq ft', large:'2,400+ sq ft' };
+  const priorityLabel = { budget:'Budget Value', efficiency:'High Efficiency', premium:'Premium Comfort' };
+  const typeLabel = { furnace:'Gas Furnace', ac:'Central AC', heatpump:'Whole-Home Heat Pump', minisplit:'Ductless Mini-Split', full:'Full System' };
+
+  const sizeNote = state.installType === 'minisplit' ? 'Per zone (single zone)' : sizeLabel[state.homeSize];
+
+  document.getElementById('estBreakdown').innerHTML = `
+    <div class="est-item"><div class="key">System Type</div><div class="val">${typeLabel[state.installType]}</div></div>
+    <div class="est-item"><div class="key">Home Size</div><div class="val">${sizeNote}</div></div>
+    <div class="est-item"><div class="key">Preference</div><div class="val">${priorityLabel[state.priority]}</div></div>
+    <div class="est-item"><div class="key">System Age</div><div class="val">${state.systemAge === 'over15' ? '15+ yrs (Replace)' : state.systemAge === '10to15' ? '10–15 yrs' : 'Under 10 yrs'}</div></div>
+  `;
+
+  // Rebates
+  const showRebate = ['heatpump','minisplit','full'].includes(state.installType);
+  document.getElementById('rebateBanner').style.display = showRebate ? 'flex' : 'none';
+  document.getElementById('rebateAmt').textContent = state.installType === 'full' ? '$3,200' : '$2,000';
+}
+
+// ── STEP 5: CALENDAR ──
+function buildCalendar() {
+  const grid = document.getElementById('calendarGrid');
+  const today = new Date();
+  const dayNames = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  let html = dayNames.map(d => `<div class="cal-day-label">${d}</div>`).join('');
+
+  const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
+  for (let i = 0; i < firstDay; i++) html += `<div class="cal-day empty"></div>`;
+
+  const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isPast = d < today.getDate();
+    const isToday = d === today.getDate();
+    const isSun = new Date(today.getFullYear(), today.getMonth(), d).getDay() === 0;
+    const cls = isPast || isSun ? 'past' : isToday ? 'available today' : 'available';
+    const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    html += `<div class="cal-day ${cls}" data-date="${dateStr}" data-display="${today.toLocaleString('en-US',{month:'short'})} ${d}" onclick="selectDate(this)">${d}</div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function selectDate(el) {
+  if (!el.classList.contains('available')) return;
+  document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  state.selectedDate = el.dataset.display;
+  document.getElementById('timeSection').style.display = 'block';
+  checkStep5();
+}
+
+function selectTime(el, val) {
+  document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  state.selectedTime = val;
+  checkStep5();
+}
+
+function checkStep5() {
+  const first  = document.getElementById('f-first')?.value.trim();
+  const last   = document.getElementById('f-last')?.value.trim();
+  const phone  = document.getElementById('f-phone')?.value.trim();
+  const addr   = document.getElementById('f-address')?.value.trim();
+  const ready  = first && last && phone && addr && state.selectedDate && state.selectedTime;
+  document.getElementById('next-5').disabled = !ready;
+}
+
+function fmtPhone(el) {
+  let v = el.value.replace(/\D/g,'');
+  if (v.length>=10) v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6,10);
+  else if (v.length>=6) v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6);
+  else if (v.length>=3) v='('+v.slice(0,3)+') '+v.slice(3);
+  el.value = v;
+}
+
+// ── SUBMIT ──
+function submitLead() {
+  const typeLabel = { furnace:'Furnace Replacement', ac:'AC Installation', heatpump:'Whole-Home Heat Pump', minisplit:'Ductless Mini-Split', full:'Full System Replacement' };
+  const first = document.getElementById('f-first').value.trim();
+  const last  = document.getElementById('f-last').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const addr  = document.getElementById('f-address').value.trim();
+  const notes = document.getElementById('f-notes').value.trim();
+  const low   = document.getElementById('estLow').textContent;
+  const high  = document.getElementById('estHigh').textContent;
+
+  // Populate summary
+  document.getElementById('sum-name').textContent    = `${first} ${last}`;
+  document.getElementById('sum-service').textContent = typeLabel[state.installType];
+  document.getElementById('sum-range').textContent   = `$${low} – $${high}`;
+  document.getElementById('sum-date').textContent    = state.selectedDate;
+  document.getElementById('sum-time').textContent    = state.selectedTime;
+  document.getElementById('sum-address').textContent = addr;
+  document.getElementById('sum-phone').textContent   = phone;
+
+  // Log lead (replace with your backend/email integration)
+  const lead = {
+    name:`${first} ${last}`, phone, email, address:addr,
+    service: typeLabel[state.installType],
+    homeSize: state.homeSize, systemAge: state.systemAge,
+    priority: state.priority,
+    estimateRange:`$${low}–$${high}`,
+    date: state.selectedDate, time: state.selectedTime,
+    notes, timestamp: new Date().toLocaleString()
+  };
+  console.log('📋 New Install Lead:', lead);
+  // TODO: POST to your CRM / email endpoint:
+  // fetch('/api/leads', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(lead) });
+
+  goStep(6);
+}
+
+// ── INIT ──
+updateProgress();
+</script>
+</body>
+</html>
