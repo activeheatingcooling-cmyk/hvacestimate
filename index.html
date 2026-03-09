@@ -398,10 +398,21 @@ header {
     <p class="step-sub">We'll ask a few quick questions to build your personalized estimate and find the best system for your home.</p>
 
     <div class="options-grid cols-2">
-      <div class="opt-card" data-value="furnace" onclick="selectOpt(this,'installType')">
+      <div class="opt-card" data-value="furnace80" onclick="selectOpt(this,'installType')">
         <span class="opt-icon">🔥</span>
-        <div class="opt-title">Furnace Replacement</div>
-        <div class="opt-desc">Gas or electric furnace — the most common heating system in Auburn homes.</div>
+        <div class="opt-title">Gas Furnace — 80% Efficiency</div>
+        <div class="opt-desc">Standard efficiency gas furnace. Great value, works with most existing venting.</div>
+      </div>
+      <div class="opt-card" data-value="furnace96" onclick="selectOpt(this,'installType')">
+        <div class="opt-badge">Best Value</div>
+        <span class="opt-icon">🔥</span>
+        <div class="opt-title">Gas Furnace — 96% Efficiency</div>
+        <div class="opt-desc">High-efficiency gas furnace. Lower monthly bills, qualifies for utility rebates.</div>
+      </div>
+      <div class="opt-card" data-value="electric" onclick="selectOpt(this,'installType')">
+        <span class="opt-icon">⚡</span>
+        <div class="opt-title">Electric Furnace / Air Handler</div>
+        <div class="opt-desc">Electric heating system or air handler — ideal for all-electric homes or heat pump pairings.</div>
       </div>
       <div class="opt-card" data-value="ac" onclick="selectOpt(this,'installType')">
         <span class="opt-icon">❄️</span>
@@ -444,7 +455,7 @@ header {
   <div class="step" id="step-2">
     <div class="step-eyebrow">About Your Home</div>
     <h1 class="step-title">Tell us about<br><em>your home</em></h1>
-    <p class="step-sub">This helps us size the right system and give you an accurate estimate range.</p>
+    <p class="step-sub">This helps us size the right system and give you an accurate estimate range. If this is a first-time install, select "Never had one" for the current system age.</p>
 
     <div class="options-grid cols-3" style="margin-bottom:20px">
       <div class="opt-card" data-value="small" onclick="selectOpt(this,'homeSize')">
@@ -464,7 +475,7 @@ header {
       </div>
     </div>
 
-    <div class="options-grid cols-3">
+    <div class="options-grid cols-2" id="systemAgeGrid">
       <div class="opt-card" data-value="under10" onclick="selectOpt(this,'systemAge')">
         <span class="opt-icon">✅</span>
         <div class="opt-title">Under 10 years</div>
@@ -479,6 +490,11 @@ header {
         <span class="opt-icon">🔴</span>
         <div class="opt-title">15+ years (or unknown)</div>
         <div class="opt-desc">Replacement likely the best value</div>
+      </div>
+      <div class="opt-card" data-value="never" onclick="selectOpt(this,'systemAge')" id="neverCard" style="display:none">
+        <span class="opt-icon">🆕</span>
+        <div class="opt-title">Never had one</div>
+        <div class="opt-desc">First-time installation — brand new system</div>
       </div>
     </div>
 
@@ -657,9 +673,23 @@ function goStep(n) {
   document.getElementById('step-' + n).classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   updateProgress();
+  if (n === 2) updateAgeOptions();
   if (n === 3) buildEduCards();
   if (n === 4) buildEstimate();
   if (n === 5) buildCalendar();
+}
+
+function updateAgeOptions() {
+  const showNever = ['ac','heatpump','minisplit'].includes(state.installType);
+  const neverCard = document.getElementById('neverCard');
+  const grid = document.getElementById('systemAgeGrid');
+  if (neverCard) neverCard.style.display = showNever ? '' : 'none';
+  // Reset age if switching to a type that doesn't have "never" and "never" was selected
+  if (!showNever && state.systemAge === 'never') {
+    state.systemAge = null;
+    grid.querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
+    checkNextButtons();
+  }
 }
 
 function updateProgress() {
@@ -693,6 +723,33 @@ function checkNextButtons() {
 // ── STEP 3: EDUCATION ──
 function buildEduCards() {
   const typeInfo = {
+    furnace80: {
+      title: '80% Efficiency Gas Furnace',
+      cards: [
+        { icon:'🔥', title:'Reliable & Affordable', body:'An 80% AFUE gas furnace is the most affordable option upfront and works with most standard flue venting — no chimney liner changes needed.', highlight:'Lower upfront cost' },
+        { icon:'⏱️', title:'15–20 Year Lifespan', body:'A quality 80% furnace installed today should last 15–20 years with annual tune-ups.', highlight:'Long-term investment' },
+        { icon:'🔧', title:'Install Time: 4–6 Hours', body:'Most furnace replacements are completed in a single day. You\'ll have heat back the same afternoon.', highlight:'Same-day heat restored' },
+        { icon:'🏷️', title:'Brands We Install', body:'Goodman, American Standard, Daikin, and Bosch — we stock multiple 80% tiers to fit every budget.', highlight:'Multiple options' }
+      ]
+    },
+    furnace96: {
+      title: '96% High-Efficiency Gas Furnace',
+      cards: [
+        { icon:'⚡', title:'Cut Your Heating Bill', body:'A 96% AFUE furnace is significantly more efficient than 80% models — most homeowners see noticeable savings on monthly gas bills, especially in cold Washington winters.', highlight:'Lower monthly bills' },
+        { icon:'💸', title:'Utility Rebates Available', body:'High-efficiency gas furnaces may qualify for Puget Sound Energy (PSE) rebates. We\'ll check your eligibility at your free estimate.', highlight:'Possible rebate savings' },
+        { icon:'🔧', title:'PVC Venting Required', body:'96% furnaces vent through PVC pipe (not a flue) — we\'ll assess your home\'s venting during the estimate to confirm compatibility.', highlight:'We handle all permitting' },
+        { icon:'🏷️', title:'Brands We Install', body:'Goodman, American Standard, Daikin, and Bosch high-efficiency models — built to last 15–20 years.', highlight:'Top-tier brands' }
+      ]
+    },
+    electric: {
+      title: 'Electric Furnace / Air Handler',
+      cards: [
+        { icon:'⚡', title:'No Gas Line Needed', body:'An electric furnace or air handler runs entirely on electricity — ideal for homes without a gas connection or when pairing with a heat pump system.', highlight:'All-electric option' },
+        { icon:'🌀', title:'Perfect Heat Pump Partner', body:'Air handlers are commonly paired with heat pumps as the indoor unit — providing efficient heating, cooling, and air circulation through your existing ductwork.', highlight:'Heat pump compatible' },
+        { icon:'🔧', title:'Install Time: 4–6 Hours', body:'Electric furnace and air handler replacements are typically completed in a single day with minimal disruption.', highlight:'Same-day install' },
+        { icon:'🏷️', title:'Brands We Install', body:'We install Goodman, Daikin, American Standard, and Bosch electric systems — matched to your home\'s needs and budget.', highlight:'Multiple brands available' }
+      ]
+    },
     furnace: {
       title: 'Gas Furnace Replacement',
       cards: [
@@ -752,12 +809,12 @@ function buildEduCards() {
 // ── STEP 4: ESTIMATE ──
 function buildEstimate() {
   // Base ranges [low, high] by type
-  const base = { furnace:[3800,6700], ac:[5000,8000], heatpump:[5000,8000], minisplit:[3000,5500], full:[10000,15000] };
+  const base = { furnace80:[3500,6000], furnace96:[4200,7200], electric:[3900,6900], furnace:[3800,6700], ac:[5000,8000], heatpump:[5000,8000], minisplit:[3000,5500], full:[10000,15000] };
   const sizeAdj = { small:[0,0], medium:[300,600], large:[700,1200] };
   const priorAdj = { budget:[0,-300], efficiency:[300,600], premium:[300,600] };
 
   const [bL, bH] = base[state.installType] || base.furnace;
-  const [sL, sH] = state.installType === 'minisplit' ? [0,0] : (sizeAdj[state.homeSize] || [0,0]);
+  const [sL, sH] = ['minisplit','electric'].includes(state.installType) ? [0,0] : (sizeAdj[state.homeSize] || [0,0]);
   const [pL, pH] = priorAdj[state.priority] || [0,0];
 
   let low  = bL + sL + pL;
@@ -768,12 +825,12 @@ function buildEstimate() {
   document.getElementById('estLow').textContent  = low.toLocaleString();
   document.getElementById('estHigh').textContent = high.toLocaleString();
 
-  const notes = { furnace:'Gas furnace + installation + permit', ac:'AC unit, line set, electrical + labor', heatpump:'Whole-home heat pump + installation + permit', minisplit:'Single-zone ductless mini-split + installation', full:'Complete system: furnace/HP + AC + coil + labor' };
+  const notes = { furnace80:'80% AFUE gas furnace + installation + permit', furnace96:'96% high-efficiency gas furnace + installation + permit', electric:'Electric furnace/air handler + installation + electrical', furnace:'Gas furnace + installation + permit', ac:'AC unit, line set, electrical + labor', heatpump:'Whole-home heat pump + installation + permit', minisplit:'Single-zone ductless mini-split + installation', full:'Complete system: furnace/HP + AC + coil + labor' };
   document.getElementById('estNote').textContent = notes[state.installType];
 
   const sizeLabel = { small:'Under 1,200 sq ft', medium:'1,200–2,400 sq ft', large:'2,400+ sq ft' };
   const priorityLabel = { budget:'Budget Value', efficiency:'High Efficiency', premium:'Premium Comfort' };
-  const typeLabel = { furnace:'Gas Furnace', ac:'Central AC', heatpump:'Whole-Home Heat Pump', minisplit:'Ductless Mini-Split', full:'Full System' };
+  const typeLabel = { furnace80:'Gas Furnace (80% Eff)', furnace96:'Gas Furnace (96% Eff)', electric:'Electric Furnace / Air Handler', furnace:'Gas Furnace', ac:'Central AC', heatpump:'Whole-Home Heat Pump', minisplit:'Ductless Mini-Split', full:'Full System' };
 
   const sizeNote = state.installType === 'minisplit' ? 'Per zone (single zone)' : sizeLabel[state.homeSize];
 
@@ -781,11 +838,11 @@ function buildEstimate() {
     <div class="est-item"><div class="key">System Type</div><div class="val">${typeLabel[state.installType]}</div></div>
     <div class="est-item"><div class="key">Home Size</div><div class="val">${sizeNote}</div></div>
     <div class="est-item"><div class="key">Preference</div><div class="val">${priorityLabel[state.priority]}</div></div>
-    <div class="est-item"><div class="key">System Age</div><div class="val">${state.systemAge === 'over15' ? '15+ yrs (Replace)' : state.systemAge === '10to15' ? '10–15 yrs' : 'Under 10 yrs'}</div></div>
+    <div class="est-item"><div class="key">System Age</div><div class="val">${state.systemAge === 'never' ? 'New Installation' : state.systemAge === 'over15' ? '15+ yrs (Replace)' : state.systemAge === '10to15' ? '10–15 yrs' : 'Under 10 yrs'}</div></div>
   `;
 
   // Rebates
-  const showRebate = ['heatpump','minisplit','full'].includes(state.installType);
+  const showRebate = ['heatpump','minisplit','full','electric'].includes(state.installType);
   document.getElementById('rebateBanner').style.display = showRebate ? 'flex' : 'none';
   document.getElementById('rebateAmt').textContent = state.installType === 'full' ? '$3,200' : '$2,000';
 }
@@ -847,7 +904,7 @@ function fmtPhone(el) {
 
 // ── SUBMIT ──
 function submitLead() {
-  const typeLabel = { furnace:'Furnace Replacement', ac:'AC Installation', heatpump:'Whole-Home Heat Pump', minisplit:'Ductless Mini-Split', full:'Full System Replacement' };
+  const typeLabel = { furnace80:'Gas Furnace (80%) Replacement', furnace96:'Gas Furnace (96%) Replacement', electric:'Electric Furnace / Air Handler', furnace:'Furnace Replacement', ac:'AC Installation', heatpump:'Whole-Home Heat Pump', minisplit:'Ductless Mini-Split', full:'Full System Replacement' };
   const first = document.getElementById('f-first').value.trim();
   const last  = document.getElementById('f-last').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
